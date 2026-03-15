@@ -1,0 +1,37 @@
+{
+    "schemaVersion": 1,
+    "id": "functional_fletching_table",
+    "version": "${version}",
+    "name": "Functional Fletching Table",
+    "description": "A mod that add functionality to the fletching table",
+    "authors": [
+        "ImBanana"
+    ],
+    "contact": {
+        "homepage": ""
+    },
+    "license": "MIT",
+    "icon": "assets/functional_fletching_table/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "me.imbanana.functionalfletchingtable.fabric.FunctionalFletchingTableFabric"
+        ],
+        "client": [
+            "me.imbanana.functionalfletchingtable.fabric.client.FunctionalFletchingTableFabricClient"
+        ]
+    },
+    "mixins": [
+        "functional_fletching_table.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": "${loader_version_range}",
+        "minecraft": "${mc_version_range}",
+        "java": ">=21",
+        "architectury": "${architectury_version_range}",
+        "fabric-api": "*"
+    },
+    "suggests": {
+        "another-mod": "*"
+    }
+}

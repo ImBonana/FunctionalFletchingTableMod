@@ -1,0 +1,39 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+#issueTrackerURL = ""
+license = "MIT"
+
+[[mods]]
+modId = "functional_fletching_table"
+version = "${version}"
+displayName = "Functional Fletching Table"
+authors = "ImBanana"
+description = '''
+A mod that add functionality to the fletching table
+'''
+#logoFile = ""
+#modUrl = ""
+
+[[dependencies.functional_fletching_table]]
+modId = "neoforge"
+type = "required"
+versionRange = "${loader_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.functional_fletching_table]]
+modId = "minecraft"
+type = "required"
+versionRange = "${mc_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.functional_fletching_table]]
+modId = "architectury"
+type = "required"
+versionRange = "${architectury_version_range}"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "functional_fletching_table.mixins.json"
