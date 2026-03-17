@@ -1,6 +1,5 @@
 package me.imbanana.functionalfletchingtable;
 
-import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.common.InteractionEvent;
 import me.imbanana.functionalfletchingtable.events.ModEvents;
 import me.imbanana.functionalfletchingtable.screens.ModScreens;

@@ -1,14 +1,11 @@
 package me.imbanana.functionalfletchingtable.screens;
 
 import dev.architectury.registry.client.gui.MenuScreenRegistry;
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
 import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
 import me.imbanana.functionalfletchingtable.screens.fletchingtable.FletchingTableScreen;
 import me.imbanana.functionalfletchingtable.screens.fletchingtable.FletchingTableMenu;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
