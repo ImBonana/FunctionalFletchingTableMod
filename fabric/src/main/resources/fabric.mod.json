@@ -18,7 +18,7 @@
             "me.imbanana.functionalfletchingtable.fabric.FunctionalFletchingTableFabric"
         ],
         "client": [
-            "me.imbanana.functionalfletchingtable.fabric.client.FunctionalFletchingTableFabricClient"
+            "me.imbanana.functionalfletchingtable.fabric.FunctionalFletchingTableFabricClient"
         ]
     },
     "mixins": [

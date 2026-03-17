@@ -1,11 +1,11 @@
 package me.imbanana.functionalfletchingtable.neoforge;
 
-import me.imbanana.functionalfletchingtable.FunctionalFletchingTable;
+import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
 import net.neoforged.fml.common.Mod;
 
-@Mod(FunctionalFletchingTable.MOD_ID)
+@Mod(FunctionalFletchingTableMod.MOD_ID)
 public final class FunctionalFletchingTableNeoForge {
     public FunctionalFletchingTableNeoForge() {
-        FunctionalFletchingTable.init();
+        FunctionalFletchingTableMod.init();
     }
 }
