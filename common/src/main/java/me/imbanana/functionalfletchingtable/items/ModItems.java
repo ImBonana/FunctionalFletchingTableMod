@@ -17,9 +17,9 @@ public class ModItems {
             "special_arrow",
             SpecialArrowItem::new,
             new Item.Properties()
-                    .component(ModDataComponents.SPECIAL_ARROW_TIP, BuiltInRegistries.ITEM.wrapAsHolder(Items.AIR))
-                    .component(ModDataComponents.SPECIAL_ARROW_SHAFT, BuiltInRegistries.ITEM.wrapAsHolder(Items.AIR))
-                    .component(ModDataComponents.SPECIAL_ARROW_FLETCHING, BuiltInRegistries.ITEM.wrapAsHolder(Items.AIR))
+                    .component(ModDataComponents.SPECIAL_ARROW_TIP, BuiltInRegistries.ITEM.wrapAsHolder(Items.FLINT))
+                    .component(ModDataComponents.SPECIAL_ARROW_SHAFT, BuiltInRegistries.ITEM.wrapAsHolder(Items.STICK))
+                    .component(ModDataComponents.SPECIAL_ARROW_FLETCHING, BuiltInRegistries.ITEM.wrapAsHolder(Items.FEATHER))
                     .component(ModDataComponents.SPECIAL_ARROW_EFFECT, BuiltInRegistries.ITEM.wrapAsHolder(Items.AIR))
                     .arch$tab(CreativeModeTabs.COMBAT)
     );

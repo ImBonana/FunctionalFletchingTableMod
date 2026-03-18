@@ -6,5 +6,7 @@
     "tag.item.functional_fletching_table.fletching_table.shaft_items": "Special Arrow Shaft Items",
     "tag.item.functional_fletching_table.fletching_table.tip_items": "Special Arrow Tip Items",
 
-    "item.functional_fletching_table.special_arrow": "Special Arrow"
+    "item.functional_fletching_table.special_arrow": "Special Arrow",
+
+    "entity.functional_fletching_table.special_arrow": "Special Arrow"
 }
