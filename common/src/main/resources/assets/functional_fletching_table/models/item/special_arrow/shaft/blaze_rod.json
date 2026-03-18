@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "functional_fletching_table:item/special_arrow/shaft/blaze_rod"
+    }
+}

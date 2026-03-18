@@ -1,5 +1,15 @@
 {
     "values": [
-        "minecraft:flint"
+        "minecraft:amethyst_shard",
+        "minecraft:copper_ingot",
+        "minecraft:diamond",
+        "minecraft:echo_shard",
+        "minecraft:flint",
+        "minecraft:gold_ingot",
+        "minecraft:iron_ingot",
+        "minecraft:netherite_ingot",
+        "minecraft:prismarine_shard",
+        "minecraft:tnt",
+        "minecraft:wind_charge"
     ]
 }

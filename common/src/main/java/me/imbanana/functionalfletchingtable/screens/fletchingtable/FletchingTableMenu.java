@@ -1,8 +1,13 @@
 package me.imbanana.functionalfletchingtable.screens.fletchingtable;
 
+import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
+import me.imbanana.functionalfletchingtable.datacomponents.ModDataComponents;
+import me.imbanana.functionalfletchingtable.items.ModItems;
 import me.imbanana.functionalfletchingtable.screens.ModScreens;
 import me.imbanana.functionalfletchingtable.tags.ModItemTags;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -40,7 +45,7 @@ public class FletchingTableMenu extends ItemCombinerMenu {
                 .withSlot(0, 71, 32, itemStack -> itemStack.is(ModItemTags.TIP_ITEMS))
                 .withSlot(1, 53, 43, itemStack -> itemStack.is(ModItemTags.SHAFT_ITEMS))
                 .withSlot(2, 35, 54, itemStack -> itemStack.is(ModItemTags.FLETCHING_ITEMS))
-                .withSlot(3, 125, 12, itemStack -> itemStack.is(Items.LINGERING_POTION))
+                .withSlot(3, 125, 12, itemStack -> itemStack.is(ModItemTags.ARROW_EFFECT_ITEMS))
                 .withResultSlot(4, 125, 43)
                 .build();
     }
@@ -60,25 +65,48 @@ public class FletchingTableMenu extends ItemCombinerMenu {
         // normal arrow
         ItemStack result = ItemStack.EMPTY;
         ItemStack potionItem = this.inputSlots.getItem(3);
-        if (!potionItem.is(Items.LINGERING_POTION) && !potionItem.is(Items.AIR)) return;
+        if (!potionItem.is(Items.LINGERING_POTION) && !potionItem.is(Items.AIR) && !potionItem.is(ModItemTags.ARROW_EFFECT_ITEMS)) return;
         PotionContents potionEffect = potionItem.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
+        ItemStack tipItem = this.inputSlots.getItem(0);
+        ItemStack shaftItem = this.inputSlots.getItem(1);
+        ItemStack fletchingItem = this.inputSlots.getItem(2);
+
         if (
-                this.inputSlots.getItem(0).is(Items.FLINT)
-                && this.inputSlots.getItem(1).is(Items.STICK)
-                && this.inputSlots.getItem(2).is(Items.FEATHER)
+                tipItem.is(Items.FLINT)
+                && shaftItem.is(Items.STICK)
+                && fletchingItem.is(Items.FEATHER)
         ) {
             // Normal Arrows
 
-            if (this.inputSlots.getItem(3).is(Items.LINGERING_POTION)) {
+            if (potionItem.is(Items.LINGERING_POTION)) {
                 result = new ItemStack(Items.TIPPED_ARROW, 8);
                 result.set(DataComponents.POTION_CONTENTS, potionEffect);
                 result.set(DataComponents.POTION_DURATION_SCALE, 0.125f);
+            } else if (potionItem.is(Items.GLOWSTONE_DUST)) {
+                result = new ItemStack(Items.SPECTRAL_ARROW, 8);
             } else {
                 result = new ItemStack(Items.ARROW, 8);
             }
-        } else  {
+        } else if (
+                !tipItem.isEmpty()
+                && !shaftItem.isEmpty()
+                && !fletchingItem.isEmpty()) {
+
             // Custom Arrows
+            result = new ItemStack(ModItems.SPECIAL_ARROW, 8);
+            result.set(ModDataComponents.SPECIAL_ARROW_TIP, tipItem.getItemHolder());
+            result.set(ModDataComponents.SPECIAL_ARROW_SHAFT, shaftItem.getItemHolder());
+            result.set(ModDataComponents.SPECIAL_ARROW_FLETCHING, fletchingItem.getItemHolder());
+
+            if (!potionItem.isEmpty()) {
+                if (potionEffect == PotionContents.EMPTY) {
+                    result.set(ModDataComponents.SPECIAL_ARROW_EFFECT, potionItem.getItemHolder());
+                } else {
+                    result.set(DataComponents.POTION_CONTENTS, potionEffect);
+                    result.set(DataComponents.POTION_DURATION_SCALE, 0.125f);
+                }
+            }
         }
 
 

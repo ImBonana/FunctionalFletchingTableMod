@@ -9,5 +9,6 @@ public class ModItemTags {
     public static final TagKey<Item> SHAFT_ITEMS = TagKey.create(Registries.ITEM, FunctionalFletchingTableMod.idOf("fletching_table/shaft_items"));
     public static final TagKey<Item> TIP_ITEMS = TagKey.create(Registries.ITEM, FunctionalFletchingTableMod.idOf("fletching_table/tip_items"));
     public static final TagKey<Item> FLETCHING_ITEMS = TagKey.create(Registries.ITEM, FunctionalFletchingTableMod.idOf("fletching_table/fletching_items"));
+    public static final TagKey<Item> ARROW_EFFECT_ITEMS = TagKey.create(Registries.ITEM, FunctionalFletchingTableMod.idOf("fletching_table/effect_items"));
 
 }

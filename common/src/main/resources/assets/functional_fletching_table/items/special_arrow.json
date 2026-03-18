@@ -1,0 +1,241 @@
+{
+    "model": {
+        "type": "minecraft:composite",
+        "models": [
+            {
+                "type": "minecraft:select",
+                "property": "minecraft:component",
+                "component": "functional_fletching_table:special_arrow_tip",
+                "cases": [
+                    {
+                        "when": "minecraft:amethyst_shard",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/amethyst_shard"
+                        }
+                    },
+                    {
+                        "when": "minecraft:copper_ingot",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/copper_ingot"
+                        }
+                    },
+                    {
+                        "when": "minecraft:diamond",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/diamond"
+                        }
+                    },
+                    {
+                        "when": "minecraft:echo_shard",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/echo_shard"
+                        }
+                    },
+                    {
+                        "when": "minecraft:flint",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/flint"
+                        }
+                    },
+                    {
+                        "when": "minecraft:gold_ingot",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/gold_ingot"
+                        }
+                    },
+                    {
+                        "when": "minecraft:iron_ingot",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/iron_ingot"
+                        }
+                    },
+                    {
+                        "when": "minecraft:netherite_ingot",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/netherite_ingot"
+                        }
+                    },
+                    {
+                        "when": "minecraft:prismarine_shard",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/prismarine_shard"
+                        }
+                    },
+                    {
+                        "when": "minecraft:tnt",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/tnt"
+                        }
+                    },
+                    {
+                        "when": "minecraft:wind_charge",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/tip/wind_charge"
+                        }
+                    }
+                ],
+                "fallback": {
+                    "type": "minecraft:model",
+                    "model": "functional_fletching_table:item/special_arrow/tip/flint"
+                }
+            },
+            {
+                "type": "minecraft:select",
+                "property": "minecraft:component",
+                "component": "functional_fletching_table:special_arrow_shaft",
+                "cases": [
+                    {
+                        "when": "minecraft:blaze_rod",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/shaft/blaze_rod"
+                        }
+                    },
+                    {
+                        "when": "minecraft:blue_ice",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/shaft/blue_ice"
+                        }
+                    },
+                    {
+                        "when": "minecraft:breeze_rod",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/shaft/breeze_rod"
+                        }
+                    },
+                    {
+                        "when": "minecraft:carrot",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/shaft/carrot"
+                        }
+                    },
+                    {
+                        "when": "minecraft:stick",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/shaft/stick"
+                        }
+                    }
+                ],
+                "fallback": {
+                    "type": "minecraft:model",
+                    "model": "functional_fletching_table:item/special_arrow/shaft/stick"
+                }
+            },
+            {
+                "type": "minecraft:select",
+                "property": "minecraft:component",
+                "component": "functional_fletching_table:special_arrow_fletching",
+                "cases": [
+                    {
+                        "when": "minecraft:feather",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/fletching/feather"
+                        }
+                    },
+                    {
+                        "when": "minecraft:firework_rocket",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/fletching/firework_rocket"
+                        }
+                    },
+                    {
+                        "when": "minecraft:phantom_membrane",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/fletching/phantom_membrane"
+                        }
+                    },
+                    {
+                        "when": "minecraft:wheat",
+                        "model": {
+                            "type": "minecraft:model",
+                            "model": "functional_fletching_table:item/special_arrow/fletching/wheat"
+                        }
+                    }
+                ],
+                "fallback": {
+                    "type": "minecraft:model",
+                    "model": "functional_fletching_table:item/special_arrow/fletching/feather"
+                }
+            },
+            {
+                "type": "minecraft:condition",
+                "property": "minecraft:has_component",
+                "component": "minecraft:potion_contents",
+                "on_true": {
+                    "type": "minecraft:model",
+                    "model": "functional_fletching_table:item/special_arrow/effect/potion_effect",
+                    "tints": [
+                        {
+                            "type": "minecraft:potion",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "on_false": {
+                    "type": "minecraft:select",
+                    "property": "minecraft:component",
+                    "component": "functional_fletching_table:special_arrow_effect",
+                    "cases": [
+                        {
+                            "when": "minecraft:fire_charge",
+                            "model": {
+                                "type": "minecraft:model",
+                                "model": "functional_fletching_table:item/special_arrow/effect/fire_charge"
+                            }
+                        },
+                        {
+                            "when": "minecraft:glowstone_dust",
+                            "model": {
+                                "type": "minecraft:model",
+                                "model": "functional_fletching_table:item/special_arrow/effect/glowstone_dust"
+                            }
+                        },
+                        {
+                            "when": "minecraft:gunpowder",
+                            "model": {
+                                "type": "minecraft:model",
+                                "model": "functional_fletching_table:item/special_arrow/effect/gunpowder"
+                            }
+                        },
+                        {
+                            "when": "minecraft:redstone",
+                            "model": {
+                                "type": "minecraft:model",
+                                "model": "functional_fletching_table:item/special_arrow/effect/redstone"
+                            }
+                        },
+                        {
+                            "when": "minecraft:slime_ball",
+                            "model": {
+                                "type": "minecraft:model",
+                                "model": "functional_fletching_table:item/special_arrow/effect/slime_ball"
+                            }
+                        }
+                    ],
+                    "fallback": {
+                        "type": "minecraft:model",
+                        "model": "minecraft:item/air"
+                    }
+                }
+            }
+        ]
+    }
+}
