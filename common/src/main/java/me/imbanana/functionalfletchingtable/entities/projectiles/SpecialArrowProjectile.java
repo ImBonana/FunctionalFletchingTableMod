@@ -1,6 +1,5 @@
 package me.imbanana.functionalfletchingtable.entities.projectiles;
 
-import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
 import me.imbanana.functionalfletchingtable.datacomponents.ModDataComponents;
 import me.imbanana.functionalfletchingtable.entities.ModEntityType;
 import net.minecraft.core.Holder;
@@ -20,8 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
-
-import java.util.Optional;
 
 public class SpecialArrowProjectile extends AbstractArrow {
     private static final int EXPOSED_POTION_DECAY_TIME = 600;

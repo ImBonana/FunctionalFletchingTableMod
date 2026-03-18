@@ -1,13 +1,10 @@
 package me.imbanana.functionalfletchingtable.screens.fletchingtable;
 
-import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
 import me.imbanana.functionalfletchingtable.datacomponents.ModDataComponents;
 import me.imbanana.functionalfletchingtable.items.ModItems;
 import me.imbanana.functionalfletchingtable.screens.ModScreens;
 import me.imbanana.functionalfletchingtable.tags.ModItemTags;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
