@@ -1,8 +1,12 @@
 package me.imbanana.functionalfletchingtable.entities.projectiles;
 
+import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
+import me.imbanana.functionalfletchingtable.arroweffects.AbstractArrowEffect;
+import me.imbanana.functionalfletchingtable.arroweffects.ModArrowEffects;
 import me.imbanana.functionalfletchingtable.datacomponents.ModDataComponents;
 import me.imbanana.functionalfletchingtable.entities.ModEntityType;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,6 +23,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class SpecialArrowProjectile extends AbstractArrow {
     private static final int EXPOSED_POTION_DECAY_TIME = 600;
@@ -30,6 +45,8 @@ public class SpecialArrowProjectile extends AbstractArrow {
     private static final EntityDataAccessor<String> ID_EFFECT_ITEM = SynchedEntityData.defineId(SpecialArrowProjectile.class, EntityDataSerializers.STRING);
     private static final byte EVENT_POTION_PUFF = 0;
 
+    private List<AbstractArrowEffect> arrowEffects = new ArrayList<>();
+
     public SpecialArrowProjectile(EntityType<? extends SpecialArrowProjectile> entityType, Level level) {
         super(entityType, level);
     }
@@ -37,11 +54,54 @@ public class SpecialArrowProjectile extends AbstractArrow {
     public SpecialArrowProjectile(Level level, double x, double y, double z, ItemStack itemStack, ItemStack weapon) {
         super(ModEntityType.SPECIAL_ARROW, x, y, z, level, itemStack, weapon);
         this.updateTexture();
+        this.createArrowEffects();
+
+        this.executeArrowEffectMethod(AbstractArrowEffect::init);
+        this.setBaseDamage(this.executeArrowEffectMethodWithResult(AbstractArrowEffect::getBaseDamageBonus, Double::sum, 2.0));
     }
 
     public SpecialArrowProjectile(Level level, LivingEntity livingEntity, ItemStack itemStack, ItemStack weapon) {
         super(ModEntityType.SPECIAL_ARROW, livingEntity, level, itemStack, weapon);
         this.updateTexture();
+        this.createArrowEffects();
+
+        this.executeArrowEffectMethod(AbstractArrowEffect::init);
+        this.setBaseDamage(this.executeArrowEffectMethodWithResult(AbstractArrowEffect::getBaseDamageBonus, Double::sum, 2.0));
+
+    }
+
+    @Override
+    public void onRemoval(RemovalReason removalReason) {
+        super.onRemoval(removalReason);
+        this.executeArrowEffectMethod(effect -> effect.onRemoval(removalReason));
+    }
+
+    @Override
+    protected void onHitBlock(BlockHitResult blockHitResult) {
+        boolean shouldContinue = this.executeArrowEffectMethodCancelable(effect -> effect.hitBlock(blockHitResult));
+
+        if (shouldContinue) {
+            super.onHitBlock(blockHitResult);
+        } else {
+            BlockState blockState = this.level().getBlockState(blockHitResult.getBlockPos());
+            blockState.onProjectileHit(this.level(), blockState, blockHitResult, this);
+        }
+    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult entityHitResult) {
+        super.onHitEntity(entityHitResult);
+        this.executeArrowEffectMethod(effect -> effect.hitEntity(entityHitResult));
+    }
+
+    @Override
+    public byte getPierceLevel() {
+        return (byte) ((int) super.getPierceLevel() + this.executeArrowEffectMethodWithResult(AbstractArrowEffect::getEntityPierceBonus, Integer::sum, 0));
+    }
+
+    @Override
+    public Vec3 getMovementToShoot(double d, double e, double f, float g, float h) {
+        return super.getMovementToShoot(d, e, f, g + this.executeArrowEffectMethodWithResult(AbstractArrowEffect::initialSpeedModifierBonus, Float::sum, 0f), h);
     }
 
     private PotionContents getPotionContents() {
@@ -104,6 +164,45 @@ public class SpecialArrowProjectile extends AbstractArrow {
         this.entityData.set(ID_EFFECT_ITEM, this.getEffectItem());
     }
 
+    private void createArrowEffects() {
+        this.createArrowEffectFormDataComponent(ModDataComponents.SPECIAL_ARROW_TIP);
+        this.createArrowEffectFormDataComponent(ModDataComponents.SPECIAL_ARROW_SHAFT);
+        this.createArrowEffectFormDataComponent(ModDataComponents.SPECIAL_ARROW_FLETCHING);
+        this.createArrowEffectFormDataComponent(ModDataComponents.SPECIAL_ARROW_EFFECT);
+    }
+
+    private void createArrowEffectFormDataComponent(DataComponentType<Holder<Item>> dataComponentType) {
+        Item item = this.getPickupItemStackOrigin().
+                getOrDefault(dataComponentType, BuiltInRegistries.ITEM.wrapAsHolder(Items.AIR))
+                .value();
+
+        if (ModArrowEffects.hasEffect(item)) {
+            this.arrowEffects.add(ModArrowEffects.createArrowEffect(item, this));
+        } else if (item != Items.AIR) {
+            FunctionalFletchingTableMod.LOGGER.warn("Unable to find arrow effect for %s".formatted(item.toString()));
+        }
+    }
+
+    private void executeArrowEffectMethod(Consumer<AbstractArrowEffect> consumer) {
+        for (AbstractArrowEffect arrowEffect : this.arrowEffects) {
+            consumer.accept(arrowEffect);
+        }
+    }
+
+    private boolean executeArrowEffectMethodCancelable(Predicate<AbstractArrowEffect> predicate) {
+        return arrowEffects.stream().allMatch(predicate);
+    }
+
+    private <T> T executeArrowEffectMethodWithResult(Function<AbstractArrowEffect, T> function, BiFunction<T, T, T> op, T initialValue) {
+        T currentValue = initialValue;
+
+        for (AbstractArrowEffect arrowEffect : this.arrowEffects) {
+            currentValue = op.apply(currentValue, function.apply(arrowEffect));
+        }
+
+        return currentValue;
+    }
+
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
@@ -141,6 +240,8 @@ public class SpecialArrowProjectile extends AbstractArrow {
             itemStack.remove(DataComponents.POTION_CONTENTS);
             this.setPickupItemStack(itemStack);
         }
+
+        this.executeArrowEffectMethod(AbstractArrowEffect::tick);
     }
 
     private void makeParticle(int i) {

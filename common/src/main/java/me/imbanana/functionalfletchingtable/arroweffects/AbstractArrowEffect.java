@@ -1,0 +1,46 @@
+package me.imbanana.functionalfletchingtable.arroweffects;
+
+import me.imbanana.functionalfletchingtable.entities.projectiles.SpecialArrowProjectile;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+
+public abstract class AbstractArrowEffect {
+    protected final SpecialArrowProjectile projectile;
+
+    public AbstractArrowEffect(SpecialArrowProjectile projectile) {
+        this.projectile = projectile;
+    }
+
+    public void init() {
+
+    }
+
+    public void onRemoval(Entity.RemovalReason removalReason) {
+
+    }
+
+    public void tick() {
+
+    }
+
+    public boolean hitBlock(BlockHitResult blockHitResult) {
+        return true;
+    }
+
+    public void hitEntity(EntityHitResult entityHitResult) {
+
+    }
+
+    public int getEntityPierceBonus() {
+        return 0;
+    }
+
+    public double getBaseDamageBonus() {
+        return 0;
+    }
+
+    public float initialSpeedModifierBonus() {
+        return 0;
+    }
+}

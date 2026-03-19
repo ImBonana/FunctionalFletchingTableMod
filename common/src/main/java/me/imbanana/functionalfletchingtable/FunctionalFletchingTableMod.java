@@ -1,6 +1,7 @@
 package me.imbanana.functionalfletchingtable;
 
 import dev.architectury.event.events.common.InteractionEvent;
+import me.imbanana.functionalfletchingtable.arroweffects.ModArrowEffects;
 import me.imbanana.functionalfletchingtable.datacomponents.ModDataComponents;
 import me.imbanana.functionalfletchingtable.entities.ModEntityType;
 import me.imbanana.functionalfletchingtable.events.ModEvents;
@@ -19,6 +20,7 @@ public final class FunctionalFletchingTableMod {
         ModItems.registerModItems();
         ModEntityType.registerModEntities();
         ModScreens.registerModScreens();
+        ModArrowEffects.registerModArrowEffects();
 
         InteractionEvent.RIGHT_CLICK_BLOCK.register(new ModEvents.FletchingTableInteraction());
     }
