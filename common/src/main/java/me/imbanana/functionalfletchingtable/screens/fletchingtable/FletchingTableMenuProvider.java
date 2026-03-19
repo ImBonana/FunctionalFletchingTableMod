@@ -1,5 +1,6 @@
 package me.imbanana.functionalfletchingtable.screens.fletchingtable;
 
+import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -14,7 +15,7 @@ public record FletchingTableMenuProvider(Level level, BlockPos blockPos) impleme
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.functional_fletching_table.fletching_table");
+        return Component.translatable("container." + FunctionalFletchingTableMod.MOD_ID + ".fletching_table");
     }
 
     @Override

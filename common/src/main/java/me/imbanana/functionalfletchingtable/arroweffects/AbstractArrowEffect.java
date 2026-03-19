@@ -43,4 +43,8 @@ public abstract class AbstractArrowEffect {
     public float initialSpeedModifierBonus() {
         return 0;
     }
+
+    public float getWaterInertiaBonus() {
+        return 0;
+    }
 }

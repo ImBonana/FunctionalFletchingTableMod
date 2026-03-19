@@ -8,5 +8,12 @@
 
     "item.functional_fletching_table.special_arrow": "Special Arrow",
 
-    "entity.functional_fletching_table.special_arrow": "Special Arrow"
+    "entity.functional_fletching_table.special_arrow": "Special Arrow",
+
+    "tooltip.functional_fletching_table.arrow_effect.tip": "Tip Properties:",
+    "tooltip.functional_fletching_table.arrow_effect.shaft": "Shaft Properties:",
+    "tooltip.functional_fletching_table.arrow_effect.fletching": "Fletching Properties:",
+    "tooltip.functional_fletching_table.arrow_effect.effect": "Effect Properties:",
+
+    "arrow_effect.tip.functional_fletching_table.underwater": "§bAllow To Shoot Underwater (+0.6 Underwater speed)§r"
 }

@@ -4,6 +4,7 @@ import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
 import me.imbanana.functionalfletchingtable.arroweffects.AbstractArrowEffect;
 import me.imbanana.functionalfletchingtable.arroweffects.ModArrowEffects;
 import me.imbanana.functionalfletchingtable.datacomponents.ModDataComponents;
+import me.imbanana.functionalfletchingtable.entities.ModEntityDataSerializers;
 import me.imbanana.functionalfletchingtable.entities.ModEntityType;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
@@ -43,6 +44,7 @@ public class SpecialArrowProjectile extends AbstractArrow {
     private static final EntityDataAccessor<String> ID_SHAFT_ITEM = SynchedEntityData.defineId(SpecialArrowProjectile.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<String> ID_FLETCHING_ITEM = SynchedEntityData.defineId(SpecialArrowProjectile.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<String> ID_EFFECT_ITEM = SynchedEntityData.defineId(SpecialArrowProjectile.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<List<ModArrowEffects.ArrowEffectInfo<? extends AbstractArrowEffect>>> ID_ARROW_EFFECTS = SynchedEntityData.defineId(SpecialArrowProjectile.class, ModEntityDataSerializers.ARROW_EFFECT_INFO);
     private static final byte EVENT_POTION_PUFF = 0;
 
     private List<AbstractArrowEffect> arrowEffects = new ArrayList<>();
@@ -102,6 +104,14 @@ public class SpecialArrowProjectile extends AbstractArrow {
     @Override
     public Vec3 getMovementToShoot(double d, double e, double f, float g, float h) {
         return super.getMovementToShoot(d, e, f, g + this.executeArrowEffectMethodWithResult(AbstractArrowEffect::initialSpeedModifierBonus, Float::sum, 0f), h);
+    }
+
+    @Override
+    protected float getWaterInertia() {
+        FunctionalFletchingTableMod.LOGGER.info(String.valueOf(this.level().isClientSide()));
+        FunctionalFletchingTableMod.LOGGER.info(String.valueOf(this.executeArrowEffectMethodWithResult(AbstractArrowEffect::getWaterInertiaBonus, Float::sum, super.getWaterInertia())));
+        FunctionalFletchingTableMod.LOGGER.info("-------------------------------------");
+        return this.executeArrowEffectMethodWithResult(AbstractArrowEffect::getWaterInertiaBonus, Float::sum, super.getWaterInertia());
     }
 
     private PotionContents getPotionContents() {
@@ -165,22 +175,28 @@ public class SpecialArrowProjectile extends AbstractArrow {
     }
 
     private void createArrowEffects() {
-        this.createArrowEffectFormDataComponent(ModDataComponents.SPECIAL_ARROW_TIP);
-        this.createArrowEffectFormDataComponent(ModDataComponents.SPECIAL_ARROW_SHAFT);
-        this.createArrowEffectFormDataComponent(ModDataComponents.SPECIAL_ARROW_FLETCHING);
-        this.createArrowEffectFormDataComponent(ModDataComponents.SPECIAL_ARROW_EFFECT);
+        List<ModArrowEffects.ArrowEffectInfo<? extends AbstractArrowEffect>> effectInfos = new ArrayList<>();
+
+        effectInfos.addAll(this.getArrowEffectInfoFromDataComponent(ModDataComponents.SPECIAL_ARROW_TIP, ModArrowEffects.ArrowPart.TIP));
+        effectInfos.addAll(this.getArrowEffectInfoFromDataComponent(ModDataComponents.SPECIAL_ARROW_SHAFT, ModArrowEffects.ArrowPart.SHAFT));
+        effectInfos.addAll(this.getArrowEffectInfoFromDataComponent(ModDataComponents.SPECIAL_ARROW_FLETCHING, ModArrowEffects.ArrowPart.FLETCHING));
+        effectInfos.addAll(this.getArrowEffectInfoFromDataComponent(ModDataComponents.SPECIAL_ARROW_EFFECT, ModArrowEffects.ArrowPart.EFFECT));
+
+        this.entityData.set(ID_ARROW_EFFECTS, effectInfos);
     }
 
-    private void createArrowEffectFormDataComponent(DataComponentType<Holder<Item>> dataComponentType) {
+    private List<ModArrowEffects.ArrowEffectInfo<? extends AbstractArrowEffect>> getArrowEffectInfoFromDataComponent(DataComponentType<Holder<Item>> dataComponentType, ModArrowEffects.ArrowPart arrowPart) {
         Item item = this.getPickupItemStackOrigin().
                 getOrDefault(dataComponentType, BuiltInRegistries.ITEM.wrapAsHolder(Items.AIR))
                 .value();
 
-        if (ModArrowEffects.hasEffect(item)) {
-            this.arrowEffects.add(ModArrowEffects.createArrowEffect(item, this));
+        if (ModArrowEffects.hasEffects(arrowPart, item)) {
+            return ModArrowEffects.getArrowEffectInfos(arrowPart, item);
         } else if (item != Items.AIR) {
             FunctionalFletchingTableMod.LOGGER.warn("Unable to find arrow effect for %s".formatted(item.toString()));
         }
+
+        return List.of();
     }
 
     private void executeArrowEffectMethod(Consumer<AbstractArrowEffect> consumer) {
@@ -211,6 +227,7 @@ public class SpecialArrowProjectile extends AbstractArrow {
         builder.define(ID_SHAFT_ITEM, "");
         builder.define(ID_FLETCHING_ITEM, "");
         builder.define(ID_EFFECT_ITEM, "");
+        builder.define(ID_ARROW_EFFECTS, List.of());
     }
 
     @Override
@@ -274,6 +291,10 @@ public class SpecialArrowProjectile extends AbstractArrow {
         return this.entityData.get(ID_EFFECT_ITEM);
     }
 
+    public List<ModArrowEffects.ArrowEffectInfo<? extends AbstractArrowEffect>> getSyncedArrowEffectInfos() {
+        return this.entityData.get(ID_ARROW_EFFECTS);
+    }
+
     @Override
     protected ItemStack getDefaultPickupItem() {
         return new ItemStack(Items.ARROW);
@@ -297,6 +318,17 @@ public class SpecialArrowProjectile extends AbstractArrow {
             }
         } else {
             super.handleEntityEvent(b);
+        }
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
+        super.onSyncedDataUpdated(entityDataAccessor);
+
+        if (entityDataAccessor.equals(ID_ARROW_EFFECTS)) {
+            this.arrowEffects.clear();
+
+            this.arrowEffects.addAll(this.getSyncedArrowEffectInfos().stream().map(arrowEffectInfo -> arrowEffectInfo.createEffect(this)).toList());
         }
     }
 }
