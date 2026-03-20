@@ -237,6 +237,7 @@ public class SpecialArrowProjectile extends AbstractArrow {
         PotionContents potionContents = this.getPotionContents();
         float f = this.getPotionDurationScale();
         potionContents.forEachEffect(mobEffectInstance -> livingEntity.addEffect(mobEffectInstance, entity), f);
+        this.executeArrowEffectMethod(arrowEffect -> arrowEffect.postHitEntity(livingEntity));
     }
 
     @Override

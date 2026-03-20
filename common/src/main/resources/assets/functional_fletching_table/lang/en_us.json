@@ -15,5 +15,10 @@
     "tooltip.functional_fletching_table.arrow_effect.fletching": "Fletching Properties:",
     "tooltip.functional_fletching_table.arrow_effect.effect": "Effect Properties:",
 
-    "arrow_effect.tip.functional_fletching_table.underwater": "§bAllow To Shoot Underwater (+0.6 Underwater speed)§r"
+    "arrow_effect.tip.functional_fletching_table.underwater": "§bAllow To Shoot Underwater (+0.6 Underwater speed)§r",
+    "arrow_effect.tip.functional_fletching_table.damage_i": "§c+1 Damage§r",
+    "arrow_effect.tip.functional_fletching_table.damage_ii": "§c+2 Damage§r",
+    "arrow_effect.tip.functional_fletching_table.damage_iii": "§c+3 Damage§r",
+    "arrow_effect.tip.functional_fletching_table.damage_iv": "§c+4 Damage§r",
+    "arrow_effect.shaft.functional_fletching_table.slowness": "§cSlowness III for 15 Seconds§r"
 }

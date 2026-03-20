@@ -87,15 +87,15 @@ public class ModEvents {
                 lines.add(Component.translatable("tooltip." + FunctionalFletchingTableMod.MOD_ID + ".arrow_effect.effect").withStyle(ChatFormatting.GRAY));
                 stack.get(DataComponents.POTION_CONTENTS).addToTooltip(tooltipContext, component -> lines.add(EFFECT_PREFIX.copy().append(component)), flag, stack);
             } else if (effectItem != null) {
-                    List<ModArrowEffects.ArrowEffectInfo<? extends AbstractArrowEffect>> arrowEffects = ModArrowEffects.getArrowEffectInfos(ModArrowEffects.ArrowPart.EFFECT, effectItem.value());
+                List<ModArrowEffects.ArrowEffectInfo<? extends AbstractArrowEffect>> arrowEffects = ModArrowEffects.getArrowEffectInfos(ModArrowEffects.ArrowPart.EFFECT, effectItem.value());
 
-                    if (!arrowEffects.isEmpty()) {
-                        lines.add(Component.translatable("tooltip." + FunctionalFletchingTableMod.MOD_ID + ".arrow_effect.effect").withStyle(ChatFormatting.GRAY));
-                    }
+                if (!arrowEffects.isEmpty()) {
+                    lines.add(Component.translatable("tooltip." + FunctionalFletchingTableMod.MOD_ID + ".arrow_effect.effect").withStyle(ChatFormatting.GRAY));
+                }
 
-                    for (ModArrowEffects.ArrowEffectInfo<? extends AbstractArrowEffect> effectInfo : arrowEffects) {
-                        lines.add(EFFECT_PREFIX.copy().withStyle(ChatFormatting.GRAY).append(Component.translatable(effectInfo.identifier().toLanguageKey("arrow_effect.effect"))));
-                    }
+                for (ModArrowEffects.ArrowEffectInfo<? extends AbstractArrowEffect> effectInfo : arrowEffects) {
+                    lines.add(EFFECT_PREFIX.copy().withStyle(ChatFormatting.GRAY).append(Component.translatable(effectInfo.identifier().toLanguageKey("arrow_effect.effect"))));
+                }
             }
         }
     }

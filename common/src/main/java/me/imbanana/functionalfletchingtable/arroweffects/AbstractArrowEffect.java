@@ -2,6 +2,7 @@ package me.imbanana.functionalfletchingtable.arroweffects;
 
 import me.imbanana.functionalfletchingtable.entities.projectiles.SpecialArrowProjectile;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
@@ -29,6 +30,10 @@ public abstract class AbstractArrowEffect {
     }
 
     public void hitEntity(EntityHitResult entityHitResult) {
+
+    }
+
+    public void postHitEntity(LivingEntity livingEntity) {
 
     }
 
