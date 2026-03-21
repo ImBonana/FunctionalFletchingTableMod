@@ -2,10 +2,7 @@ package me.imbanana.functionalfletchingtable.arroweffects;
 
 import io.netty.buffer.ByteBuf;
 import me.imbanana.functionalfletchingtable.FunctionalFletchingTableMod;
-import me.imbanana.functionalfletchingtable.arroweffects.effects.DamageArrowEffect;
-import me.imbanana.functionalfletchingtable.arroweffects.effects.GlowingArrowEffect;
-import me.imbanana.functionalfletchingtable.arroweffects.effects.SlownessArrowEffect;
-import me.imbanana.functionalfletchingtable.arroweffects.effects.UnderwaterArrowEffect;
+import me.imbanana.functionalfletchingtable.arroweffects.effects.*;
 import me.imbanana.functionalfletchingtable.entities.projectiles.SpecialArrowProjectile;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
@@ -27,6 +24,7 @@ public class ModArrowEffects {
     public static final ArrowEffectInfo<DamageArrowEffect> DAMAGE_III = registerArrowEffect("damage_iii", ArrowPart.TIP, Items.DIAMOND, projectile -> new DamageArrowEffect(projectile, 4));
     public static final ArrowEffectInfo<DamageArrowEffect> DAMAGE_IV = registerArrowEffect("damage_iv", ArrowPart.TIP, Items.NETHERITE_INGOT, projectile -> new DamageArrowEffect(projectile, 5));
     public static final ArrowEffectInfo<GlowingArrowEffect> GLOWING = registerArrowEffect("glowing", ArrowPart.EFFECT, Items.GLOWSTONE_DUST, GlowingArrowEffect::new);
+    public static final ArrowEffectInfo<BounceArrowEffect> BOUNCE = registerArrowEffect("bounce", ArrowPart.EFFECT, Items.SLIME_BALL, BounceArrowEffect::new);
 
     private static <T extends AbstractArrowEffect> ArrowEffectInfo<T> registerArrowEffect(String path, ArrowPart arrowPart, Item[] items, Function<SpecialArrowProjectile, T> factory) {
         return registerArrowEffect(path, new ArrowPart[] { arrowPart }, items, factory);

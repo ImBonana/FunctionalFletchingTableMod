@@ -18,6 +18,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -108,10 +110,13 @@ public class SpecialArrowProjectile extends AbstractArrow {
 
     @Override
     protected float getWaterInertia() {
-        FunctionalFletchingTableMod.LOGGER.info(String.valueOf(this.level().isClientSide()));
-        FunctionalFletchingTableMod.LOGGER.info(String.valueOf(this.executeArrowEffectMethodWithResult(AbstractArrowEffect::getWaterInertiaBonus, Float::sum, super.getWaterInertia())));
-        FunctionalFletchingTableMod.LOGGER.info("-------------------------------------");
         return this.executeArrowEffectMethodWithResult(AbstractArrowEffect::getWaterInertiaBonus, Float::sum, super.getWaterInertia());
+    }
+
+    @Override
+    protected ProjectileDeflection hitTargetOrDeflectSelf(HitResult hitResult) {
+        ProjectileDeflection finalDeflection = this.executeArrowEffectMethodWithResult(arrowEffect -> arrowEffect.hitTargetOrDeflectProjectile(hitResult), (projectileDeflection, projectileDeflection2) -> projectileDeflection == ProjectileDeflection.NONE ? projectileDeflection2 : projectileDeflection, ProjectileDeflection.NONE);
+        return finalDeflection == ProjectileDeflection.NONE ? super.hitTargetOrDeflectSelf(hitResult) : finalDeflection;
     }
 
     private PotionContents getPotionContents() {

@@ -3,8 +3,10 @@ package me.imbanana.functionalfletchingtable.arroweffects;
 import me.imbanana.functionalfletchingtable.entities.projectiles.SpecialArrowProjectile;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public abstract class AbstractArrowEffect {
     protected final SpecialArrowProjectile projectile;
@@ -27,6 +29,10 @@ public abstract class AbstractArrowEffect {
 
     public boolean hitBlock(BlockHitResult blockHitResult) {
         return true;
+    }
+
+    public ProjectileDeflection hitTargetOrDeflectProjectile(HitResult hitResult) {
+        return ProjectileDeflection.NONE;
     }
 
     public void hitEntity(EntityHitResult entityHitResult) {
