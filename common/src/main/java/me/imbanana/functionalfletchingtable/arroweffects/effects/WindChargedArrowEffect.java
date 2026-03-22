@@ -16,12 +16,10 @@ public class WindChargedArrowEffect extends AbstractArrowEffect {
     }
 
     @Override
-    public boolean hitBlock(BlockHitResult blockHitResult) {
+    public void hitBlock(BlockHitResult blockHitResult) {
         if (!projectile.level().isClientSide()) {
             explode();
         }
-
-        return true;
     }
 
     @Override

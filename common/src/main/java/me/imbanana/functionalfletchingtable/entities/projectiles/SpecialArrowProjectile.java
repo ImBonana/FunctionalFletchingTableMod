@@ -6,6 +6,7 @@ import me.imbanana.functionalfletchingtable.arroweffects.ModArrowEffects;
 import me.imbanana.functionalfletchingtable.datacomponents.ModDataComponents;
 import me.imbanana.functionalfletchingtable.entities.ModEntityDataSerializers;
 import me.imbanana.functionalfletchingtable.entities.ModEntityType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
@@ -24,6 +25,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -82,14 +85,8 @@ public class SpecialArrowProjectile extends AbstractArrow {
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
-        boolean shouldContinue = this.executeArrowEffectMethodCancelable(effect -> effect.hitBlock(blockHitResult));
-
-        if (shouldContinue) {
-            super.onHitBlock(blockHitResult);
-        } else {
-            BlockState blockState = this.level().getBlockState(blockHitResult.getBlockPos());
-            blockState.onProjectileHit(this.level(), blockState, blockHitResult, this);
-        }
+        this.executeArrowEffectMethod(effect -> effect.hitBlock(blockHitResult));
+        super.onHitBlock(blockHitResult);
     }
 
     @Override
@@ -117,6 +114,11 @@ public class SpecialArrowProjectile extends AbstractArrow {
     protected ProjectileDeflection hitTargetOrDeflectSelf(HitResult hitResult) {
         ProjectileDeflection finalDeflection = this.executeArrowEffectMethodWithResult(arrowEffect -> arrowEffect.hitTargetOrDeflectProjectile(hitResult), (projectileDeflection, projectileDeflection2) -> projectileDeflection == ProjectileDeflection.NONE ? projectileDeflection2 : projectileDeflection, ProjectileDeflection.NONE);
         return finalDeflection == ProjectileDeflection.NONE ? super.hitTargetOrDeflectSelf(hitResult) : finalDeflection;
+    }
+
+    @Override
+    public boolean isInGround() {
+        return super.isInGround();
     }
 
     private PotionContents getPotionContents() {

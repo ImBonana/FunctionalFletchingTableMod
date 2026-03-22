@@ -27,8 +27,8 @@ public abstract class AbstractArrowEffect {
 
     }
 
-    public boolean hitBlock(BlockHitResult blockHitResult) {
-        return true;
+    public void hitBlock(BlockHitResult blockHitResult) {
+
     }
 
     public ProjectileDeflection hitTargetOrDeflectProjectile(HitResult hitResult) {
