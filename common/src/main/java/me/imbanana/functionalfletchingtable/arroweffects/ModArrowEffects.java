@@ -27,6 +27,7 @@ public class ModArrowEffects {
     public static final ArrowEffectInfo<BounceArrowEffect> BOUNCE = registerArrowEffect("bounce", ArrowPart.EFFECT, Items.SLIME_BALL, BounceArrowEffect::new);
     public static final ArrowEffectInfo<PiercingArrowEffect> PIERCING = registerArrowEffect("piercing", ArrowPart.TIP, Items.AMETHYST_SHARD, projectile -> new PiercingArrowEffect(projectile, 3));
     public static final ArrowEffectInfo<WindChargedArrowEffect> WIND_CHARGED = registerArrowEffect("wind_charged", ArrowPart.TIP, Items.WIND_CHARGE, WindChargedArrowEffect::new);
+    public static final ArrowEffectInfo<FlameArrowEffect> FLAME = registerArrowEffect("flame", ArrowPart.EFFECT, Items.FIRE_CHARGE, FlameArrowEffect::new);
 
     private static <T extends AbstractArrowEffect> ArrowEffectInfo<T> registerArrowEffect(String path, ArrowPart arrowPart, Item[] items, Function<SpecialArrowProjectile, T> factory) {
         return registerArrowEffect(path, new ArrowPart[] { arrowPart }, items, factory);
