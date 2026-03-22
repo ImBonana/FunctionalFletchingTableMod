@@ -21,6 +21,7 @@
     "arrow_effect.tip.functional_fletching_table.damage_iii": "§c+3 Damage§r",
     "arrow_effect.tip.functional_fletching_table.damage_iv": "§c+4 Damage§r",
     "arrow_effect.tip.functional_fletching_table.piercing": "§d+3 Arrow Piercing§r",
+    "arrow_effect.tip.functional_fletching_table.wind_charged": "§bWind Charged§r",
     "arrow_effect.shaft.functional_fletching_table.slowness": "§cSlowness III for 15 Seconds§r",
     "arrow_effect.effect.functional_fletching_table.glowing": "§eGlowing for 30 Seconds§r",
     "arrow_effect.effect.functional_fletching_table.bounce": "§a+6 Wall Bounce§r"
