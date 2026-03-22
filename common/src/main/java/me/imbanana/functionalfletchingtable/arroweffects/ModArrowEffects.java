@@ -20,11 +20,12 @@ public class ModArrowEffects {
     public static final ArrowEffectInfo<UnderwaterArrowEffect> UNDERWATER = registerArrowEffect("underwater", ArrowPart.TIP, Items.PRISMARINE_SHARD, UnderwaterArrowEffect::new);
     public static final ArrowEffectInfo<SlownessArrowEffect> SLOWNESS = registerArrowEffect("slowness", ArrowPart.SHAFT, Items.BLUE_ICE, SlownessArrowEffect::new);
     public static final ArrowEffectInfo<DamageArrowEffect> DAMAGE_I = registerArrowEffect("damage_i", ArrowPart.TIP, Items.COPPER_INGOT, projectile -> new DamageArrowEffect(projectile, 1));
-    public static final ArrowEffectInfo<DamageArrowEffect> DAMAGE_II = registerArrowEffect("damage_ii", ArrowPart.TIP, new Item[] { Items.IRON_INGOT, Items.GOLD_INGOT }, projectile -> new DamageArrowEffect(projectile, 2));
+    public static final ArrowEffectInfo<DamageArrowEffect> DAMAGE_II = registerArrowEffect("damage_ii", ArrowPart.TIP, new Item[] { Items.IRON_INGOT, Items.GOLD_INGOT, Items.AMETHYST_SHARD }, projectile -> new DamageArrowEffect(projectile, 2));
     public static final ArrowEffectInfo<DamageArrowEffect> DAMAGE_III = registerArrowEffect("damage_iii", ArrowPart.TIP, Items.DIAMOND, projectile -> new DamageArrowEffect(projectile, 4));
     public static final ArrowEffectInfo<DamageArrowEffect> DAMAGE_IV = registerArrowEffect("damage_iv", ArrowPart.TIP, Items.NETHERITE_INGOT, projectile -> new DamageArrowEffect(projectile, 5));
     public static final ArrowEffectInfo<GlowingArrowEffect> GLOWING = registerArrowEffect("glowing", ArrowPart.EFFECT, Items.GLOWSTONE_DUST, GlowingArrowEffect::new);
     public static final ArrowEffectInfo<BounceArrowEffect> BOUNCE = registerArrowEffect("bounce", ArrowPart.EFFECT, Items.SLIME_BALL, BounceArrowEffect::new);
+    public static final ArrowEffectInfo<PiercingArrowEffect> PIERCING = registerArrowEffect("piercing", ArrowPart.TIP, Items.AMETHYST_SHARD, projectile -> new PiercingArrowEffect(projectile, 3));
 
     private static <T extends AbstractArrowEffect> ArrowEffectInfo<T> registerArrowEffect(String path, ArrowPart arrowPart, Item[] items, Function<SpecialArrowProjectile, T> factory) {
         return registerArrowEffect(path, new ArrowPart[] { arrowPart }, items, factory);
